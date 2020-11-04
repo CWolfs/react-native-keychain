@@ -43,11 +43,16 @@ public class CipherStorageKeystoreRsaEcb extends CipherStorageBase {
   public static final String ALGORITHM_RSA = KeyProperties.KEY_ALGORITHM_RSA;
   /** Selected block mode. */
   public static final String BLOCK_MODE_ECB = KeyProperties.BLOCK_MODE_ECB;
-  /** Selected padding transformation. */
-  public static final String PADDING_PKCS1 = KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1;
+  /** Potential padding transformations. */
+  // public static final String PADDING_PKCS1 = KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1;
+  public static final String PADDING_OAEP = KeyProperties.ENCRYPTION_PADDING_RSA_OAEP;
+
   /** Composed transformation algorithms. */
-  public static final String TRANSFORMATION_RSA_ECB_PKCS1 =
-    ALGORITHM_RSA + "/" + BLOCK_MODE_ECB + "/" + PADDING_PKCS1;
+  /*public static final String TRANSFORMATION_RSA_ECB_PKCS1 =
+    ALGORITHM_RSA + "/" + BLOCK_MODE_ECB + "/" + PADDING_PKCS1;*/
+  public static final String TRANSFORMATION_RSA_ECB_OAEP =
+    ALGORITHM_RSA + "/" + BLOCK_MODE_ECB + "/" + PADDING_OAEP;
+
   /** Selected encryption key size. */
   public static final int ENCRYPTION_KEY_SIZE = 3072;
   //endregion
@@ -175,7 +180,8 @@ public class CipherStorageKeystoreRsaEcb extends CipherStorageBase {
   @NonNull
   @Override
   protected String getEncryptionTransformation() {
-    return TRANSFORMATION_RSA_ECB_PKCS1;
+    // return TRANSFORMATION_RSA_ECB_PKCS1;
+    return TRANSFORMATION_RSA_ECB_OAEP;
   }
   //endregion
 
@@ -222,8 +228,9 @@ public class CipherStorageKeystoreRsaEcb extends CipherStorageBase {
 
     return new KeyGenParameterSpec.Builder(alias, purposes)
       .setBlockModes(BLOCK_MODE_ECB)
-      .setEncryptionPaddings(PADDING_PKCS1)
-      .setRandomizedEncryptionRequired(true)
+      // .setEncryptionPaddings(PADDING_PKCS1)
+      .setEncryptionPaddings(PADDING_OAEP)
+      // .setRandomizedEncryptionRequired(true)
       .setUserAuthenticationRequired(true)
       .setUserAuthenticationValidityDurationSeconds(5)
       .setKeySize(ENCRYPTION_KEY_SIZE);

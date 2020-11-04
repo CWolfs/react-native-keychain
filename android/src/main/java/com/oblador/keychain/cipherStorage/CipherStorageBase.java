@@ -53,6 +53,8 @@ abstract public class CipherStorageBase implements CipherStorage {
   private static final int BUFFER_READ_WRITE_SIZE = 4 * BUFFER_SIZE;
   /** Default charset encoding. */
   public static final Charset UTF8 = Charset.forName("UTF-8");
+
+  protected static final OAEPParameterSpec oaepSpec = new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA1, PSource.PSpecified.DEFAULT);
   //endregion
 
   //region Members
@@ -495,11 +497,19 @@ abstract public class CipherStorageBase implements CipherStorage {
   /** Generic cipher initialization. */
   public static final class Defaults {
     public static final EncryptStringHandler encrypt = (cipher, key, output) -> {
-      cipher.init(Cipher.ENCRYPT_MODE, key);
+      if (cipher.GetAlgorithm().contains("OAEP")) {
+        cipher.init(Cipher.ENCRYPT_MODE, key, oaepSpec);
+      } else {
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+      }
     };
 
     public static final DecryptBytesHandler decrypt = (cipher, key, input) -> {
-      cipher.init(Cipher.DECRYPT_MODE, key);
+      if (cipher.GetAlgorithm().contains("OAEP")) {
+        cipher.init(Cipher.DECRYPT_MODE, key, oaepSpec);
+      } else {
+        cipher.init(Cipher.DECRYPT_MODE, key);
+      }
     };
   }
 
