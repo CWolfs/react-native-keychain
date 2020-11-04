@@ -230,6 +230,7 @@ public class CipherStorageKeystoreRsaEcb extends CipherStorageBase {
       .setBlockModes(BLOCK_MODE_ECB)
       // .setEncryptionPaddings(PADDING_PKCS1)
       .setEncryptionPaddings(PADDING_OAEP)
+      .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
       // .setRandomizedEncryptionRequired(true)
       .setUserAuthenticationRequired(true)
       .setUserAuthenticationValidityDurationSeconds(5)

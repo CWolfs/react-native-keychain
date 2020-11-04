@@ -500,7 +500,7 @@ abstract public class CipherStorageBase implements CipherStorage {
   /** Generic cipher initialization. */
   public static final class Defaults {
     public static final EncryptStringHandler encrypt = (cipher, key, output) -> {
-      if (cipher.GetAlgorithm().contains("OAEP")) {
+      if (cipher.getAlgorithm().contains("OAEP")) {
         cipher.init(Cipher.ENCRYPT_MODE, key, oaepSpec);
       } else {
         cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -508,7 +508,7 @@ abstract public class CipherStorageBase implements CipherStorage {
     };
 
     public static final DecryptBytesHandler decrypt = (cipher, key, input) -> {
-      if (cipher.GetAlgorithm().contains("OAEP")) {
+      if (cipher.getAlgorithm().contains("OAEP")) {
         cipher.init(Cipher.DECRYPT_MODE, key, oaepSpec);
       } else {
         cipher.init(Cipher.DECRYPT_MODE, key);
