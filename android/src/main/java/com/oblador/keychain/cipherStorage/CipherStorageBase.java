@@ -27,6 +27,7 @@ import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
 import java.security.ProviderException;
 import java.security.UnrecoverableKeyException;
+import java.security.spec.MGF1ParameterSpec;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -35,6 +36,8 @@ import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.OAEPParameterSpec;
+import javax.crypto.spec.PSource;
 
 import static com.oblador.keychain.SecurityLevel.SECURE_HARDWARE;
 
